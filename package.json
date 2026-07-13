@@ -1,6 +1,6 @@
 {
   "name": "fisis-mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MCP server for FISIS (금융감독원 금융통계정보시스템) — Korean financial institution statistics for AI agents",
   "type": "module",
   "bin": {

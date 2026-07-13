@@ -2,7 +2,7 @@
 
 > 금융감독원 **금융통계정보시스템(FISIS)** OpenAPI를 AI 에이전트에게 연결하는 MCP 서버
 
-[![CI](https://github.com/namojo/fisis-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/namojo/fisis-mcp/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/fisis-mcp)](https://www.npmjs.com/package/fisis-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](package.json)
 
@@ -95,6 +95,12 @@ flowchart LR
 
 ```bash
 claude mcp add fisis -e FISIS_API_KEY=발급받은키 -- npx -y fisis-mcp
+```
+
+**npm 배포판 대신 GitHub 최신 main 사용** (`args`만 교체):
+
+```json
+"args": ["-y", "github:namojo/fisis-mcp"]
 ```
 
 **소스에서 직접 실행**:
