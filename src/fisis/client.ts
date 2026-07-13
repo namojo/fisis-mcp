@@ -12,6 +12,12 @@ import type { FisisEnvelope, RawAccount, RawCompany, RawStatList, RawStatRow, Te
 const BASE = "https://fisis.fss.or.kr/openapi";
 const TIMEOUT_MS = 15_000;
 const ALLOWED_HOST = "fisis.fss.or.kr"; // 허용 도메인 하드코딩
+/**
+ * CRITICAL (실측): FISIS WAF는 curl/node 기본 UA를 무응답 드롭한다.
+ * 브라우저 UA가 없으면 타임아웃 — IP 차단으로 오진하기 쉬움.
+ */
+const USER_AGENT =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36";
 
 function apiKey(): string {
   const k = process.env.FISIS_API_KEY?.trim();
@@ -51,7 +57,10 @@ async function callApi<T>(
       log(`retry ${attempt}: ${endpoint}`);
     }
     try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT_MS) });
+      const res = await fetch(url, {
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+        headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
+      });
       if (res.status === 429 || res.status >= 500) {
         lastErr = new FisisError(
           `FISIS 서버 응답 오류 (HTTP ${res.status})`,

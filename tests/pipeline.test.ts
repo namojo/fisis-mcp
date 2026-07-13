@@ -22,9 +22,10 @@ const MOCK_LISTS = [
   { list_no: "SA200", list_nm: "자산건전성 현황" },
 ];
 
+// 실측 확정 코드 기준 (SA014/A=BIS, SA015/C=NPL)
 const MOCK_ACCOUNTS: Record<string, unknown[]> = {
-  SA100: [{ account_cd: "A01", account_nm: "BIS기준 총자본비율" }],
-  SA200: [{ account_cd: "B01", account_nm: "고정이하여신비율" }],
+  SA014: [{ account_cd: "A", account_nm: "BIS기준 자기자본비율" }],
+  SA015: [{ account_cd: "C", account_nm: "고정이하여신비율" }],
 };
 
 function mockFetch(url: string): Response {
@@ -40,7 +41,7 @@ function mockFetch(url: string): Response {
   } else if (path.includes("statisticsInfoSearch")) {
     const cd = u.searchParams.get("financeCd");
     const acct = u.searchParams.get("accountCd");
-    const isBis = acct === "A01";
+    const isBis = acct === "A";
     body = envelope([
       { base_month: "202512", finance_cd: cd, finance_nm: "국민은행", account_cd: acct, account_nm: isBis ? "BIS기준 총자본비율" : "고정이하여신비율", a: isBis ? "17.21" : "0.34", unit_nm: "%" },
       { base_month: "202603", finance_cd: cd, finance_nm: "국민은행", account_cd: acct, account_nm: isBis ? "BIS기준 총자본비율" : "고정이하여신비율", a: isBis ? "17.55" : "0.31", unit_nm: "%" },
@@ -84,13 +85,13 @@ describe("pipeline with mocked FISIS", () => {
     const { keyIndicatorsTool } = await import("../src/tools/key-indicators.js");
     const text = await keyIndicatorsTool({ company: "국민은행", indicators: ["BIS비율", "NPL비율"] });
     expect(text).toContain("국민은행 핵심 경영지표");
-    expect(text).toContain("BIS총자본비율(%)");
+    expect(text).toContain("BIS자기자본비율(%)");
     expect(text).toContain("17.55");
     expect(text).toContain("↗"); // BIS 상승 추세
     expect(text).toContain("출처: 금융감독원");
   });
 
-  it("discovers preset codes dynamically via searchHints", async () => {
+  it("fetches verified preset codes directly (SA015/C)", async () => {
     const { fetchIndicator } = await import("../src/core/indicator-service.js");
     const s = await fetchIndicator("npl_ratio", "0010001", "202510", "202603");
     expect(s.points.get("202603")).toBe(0.31);

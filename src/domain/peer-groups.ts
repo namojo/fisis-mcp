@@ -20,7 +20,7 @@ export const PEER_GROUPS: PeerGroup[] = [
     key: "major_commercial_banks",
     name: "시중은행",
     sector: "bank",
-    memberNames: ["국민은행", "신한은행", "우리은행", "하나은행", "SC제일은행", "한국씨티은행", "iM뱅크"],
+    memberNames: ["국민은행", "신한은행", "우리은행", "하나은행", "한국스탠다드차타드은행", "한국씨티은행", "아이엠뱅크"],
     aliases: ["시중은행", "주요은행"],
   },
   {
@@ -41,14 +41,14 @@ export const PEER_GROUPS: PeerGroup[] = [
     key: "top_life_insurers",
     name: "주요 생명보험사",
     sector: "insurance_life",
-    memberNames: ["삼성생명", "한화생명", "교보생명", "신한라이프", "NH농협생명", "미래에셋생명", "KB라이프생명", "동양생명", "KDB생명", "흥국생명"],
+    memberNames: ["삼성생명", "한화생명", "교보생명", "신한라이프", "농협생명보험", "미래에셋생명", "KB라이프생명", "동양생명", "케이디비생명보험", "흥국생명"],
     aliases: ["생보사", "주요생보"],
   },
   {
     key: "top_nonlife_insurers",
     name: "주요 손해보험사",
     sector: "insurance_nonlife",
-    memberNames: ["삼성화재", "DB손해보험", "현대해상", "KB손해보험", "메리츠화재", "한화손해보험", "롯데손해보험", "흥국화재", "NH농협손해보험", "하나손해보험"],
+    memberNames: ["삼성화재", "DB손해보험", "현대해상", "KB손해보험", "메리츠화재", "한화손해보험", "롯데손해보험", "흥국화재", "농협손해보험", "하나손해보험"],
     aliases: ["손보사", "주요손보"],
   },
 ];

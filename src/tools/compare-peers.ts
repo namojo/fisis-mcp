@@ -36,9 +36,11 @@ export async function comparePeersTool(args: {
 
   // 그룹 멤버 + 기준회사 조회 (기준회사가 그룹에 없을 수 있음)
   const memberSet = new Map<string, string>(); // financeCd -> name
+  const unresolvedMembers: string[] = [];
   for (const name of group.memberNames) {
     const r = await resolveCompany(name, group.sector);
     if (r.status === "resolved" && r.match) memberSet.set(r.match.financeCd, r.match.name);
+    else unresolvedMembers.push(name); // 조용한 누락 방지 — 제외 사유 표기
   }
   memberSet.set(company.financeCd, company.name);
 
@@ -96,8 +98,8 @@ export async function comparePeersTool(args: {
     `그룹 평균: ${fmtNumber(avg, preset.unit)}${preset.unit} / 중앙값: ${fmtNumber(med, preset.unit)}${preset.unit}`,
     `ℹ️ 단순평균 기준(자산가중 아님) — FISIS 웹의 가중평균과 다를 수 있습니다. ${preset.direction === "lower_better" ? "낮을수록 상위 정렬." : ""}`,
   ];
-  if (missing.length || dropped.length) {
-    parts.push(`ℹ️ 제외: ${[...missing.map((n) => `${n}(미공표)`), ...dropped.map((n) => `${n}(시점 불일치)`)].join(", ")} — ${memberSet.size}사 중 ${aligned.length}사 기준`);
+  if (missing.length || dropped.length || unresolvedMembers.length) {
+    parts.push(`ℹ️ 제외: ${[...unresolvedMembers.map((n) => `${n}(회사명 미해석)`), ...missing.map((n) => `${n}(미공표)`), ...dropped.map((n) => `${n}(시점 불일치)`)].join(", ")} — 그룹 ${group.memberNames.length + 1}사 중 ${aligned.length}사 기준`);
   }
   parts.push(SOURCE_LINE);
   return parts.join("\n\n");

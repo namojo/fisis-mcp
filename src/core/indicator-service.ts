@@ -74,18 +74,10 @@ export async function fetchIndicator(
   endBaseMm: string,
   term: Term = "Q",
 ): Promise<IndicatorSeries> {
-  let preset = PRESETS.find((p) => p.key === presetKey);
+  const preset = PRESETS.find((p) => p.key === presetKey);
   if (!preset) throw new FisisError(`프리셋 없음: ${presetKey}`, "NO_PRESET");
-  let note: string | undefined;
-
-  // 기간 분기: availableFrom 이전 요청이면 fallback 프리셋으로 (예: K-ICS → RBC)
-  if (preset.availableFrom && endBaseMm < preset.availableFrom && preset.fallbackKey) {
-    const fb = PRESETS.find((p) => p.key === preset!.fallbackKey);
-    if (fb) {
-      note = `${preset.label}은 ${preset.availableFrom.slice(0, 4)}년 도입 — 요청 기간은 ${fb.label}로 조회함`;
-      preset = fb;
-    }
-  }
+  // 참고: K-ICS/RBC는 SH021·SI021에 연속 수록됨이 실측 확인되어 기간 분기 로직 불필요
+  const note: string | undefined = undefined;
 
   const codes: ResolvedCodes =
     preset.verified && preset.listNo && preset.accountCd

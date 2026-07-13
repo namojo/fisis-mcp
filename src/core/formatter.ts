@@ -10,7 +10,12 @@ export function fmtNumber(v: unknown, unit?: string): string {
   const n = typeof v === "number" ? v : Number(String(v).replace(/,/g, ""));
   if (Number.isNaN(n)) return String(v);
   if (unit === "%") return n.toFixed(2);
-  // 금액(백만원)은 억원 환산 병기 없이 콤마만 — 토큰 절약
+  // 원 단위 금액은 조/억으로 humanize (실측: FISIS 금액 통계는 원 단위) — 가독성 + 토큰 절약
+  if (unit === "원") {
+    const abs = Math.abs(n);
+    if (abs >= 1e12) return `${(n / 1e12).toFixed(1)}조`;
+    if (abs >= 1e8) return `${Math.round(n / 1e8).toLocaleString("ko-KR")}억`;
+  }
   return n.toLocaleString("ko-KR", { maximumFractionDigits: 2 });
 }
 

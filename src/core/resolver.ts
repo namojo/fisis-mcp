@@ -21,8 +21,16 @@ const ALIASES: Record<string, string> = {
   "우리": "우리은행",
   "카뱅": "카카오뱅크",
   "케뱅": "케이뱅크",
-  "dgb": "iM뱅크",
-  "대구은행": "iM뱅크", // 2024 사명 변경
+  "kdb생명": "케이디비생명보험",
+  "kdb생명보험": "케이디비생명보험",
+  "nh농협생명": "농협생명보험",
+  "nh농협손해보험": "농협손해보험",
+  "sc제일은행": "한국스탠다드차타드은행",
+  "제일은행": "한국스탠다드차타드은행",
+  "sc은행": "한국스탠다드차타드은행",
+  "dgb": "아이엠뱅크",
+  "im뱅크": "아이엠뱅크",
+  "대구은행": "아이엠뱅크", // 2024 사명 변경 (FISIS 등록명: 아이엠뱅크)
 };
 
 export function normalizeName(name: string): string {
@@ -54,12 +62,15 @@ export async function loadAllCompanies(sectorFilter?: Sector): Promise<Company[]
       SECTORS.map(async (s) => {
         try {
           const raw = await companySearch(s.partDiv);
-          return raw.map((r) => ({
-            financeCd: String(r.finance_cd),
-            name: String(r.finance_nm),
-            nameNormalized: normalizeName(String(r.finance_nm)),
-            sector: s.sector,
-          }));
+          return raw
+            .filter((r) => !String(r.finance_nm).includes("[폐]")) // 폐업 회사 제외 (실측: [폐] 접미사)
+            .map((r) => ({
+              financeCd: String(r.finance_cd),
+              name: String(r.finance_nm),
+              nameNormalized: normalizeName(String(r.finance_nm)),
+              sector: s.sector,
+              path: String((r as Record<string, unknown>).finance_path ?? ""),
+            }));
         } catch (e) {
           firstError ??= e;
           console.error(`[fisis-mcp] companySearch failed for ${s.sector}: ${e instanceof Error ? e.message : e}`);

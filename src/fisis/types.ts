@@ -65,4 +65,6 @@ export interface Company {
   name: string;
   nameNormalized: string;
   sector: Sector;
+  /** FISIS 분류 경로 (예: 국내은행\\일반은행\\시중은행\\국민은행) — 동종그룹 파생 가능 */
+  path?: string;
 }
