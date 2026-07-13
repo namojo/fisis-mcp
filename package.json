@@ -16,7 +16,8 @@
     "dev": "tsc --watch",
     "test": "vitest run",
     "verify-presets": "node dist/scripts/verify-presets.js",
-    "inspector": "npx @modelcontextprotocol/inspector node dist/index.js"
+    "inspector": "npx @modelcontextprotocol/inspector node dist/index.js",
+    "prepare": "npm run build"
   },
   "keywords": [
     "mcp",
