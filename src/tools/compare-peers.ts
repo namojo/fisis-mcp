@@ -99,7 +99,7 @@ export async function comparePeersTool(args: {
     `ℹ️ 단순평균 기준(자산가중 아님) — FISIS 웹의 가중평균과 다를 수 있습니다. ${preset.direction === "lower_better" ? "낮을수록 상위 정렬." : ""}`,
   ];
   if (missing.length || dropped.length || unresolvedMembers.length) {
-    parts.push(`ℹ️ 제외: ${[...unresolvedMembers.map((n) => `${n}(회사명 미해석)`), ...missing.map((n) => `${n}(미공표)`), ...dropped.map((n) => `${n}(시점 불일치)`)].join(", ")} — 그룹 ${group.memberNames.length + 1}사 중 ${aligned.length}사 기준`);
+    parts.push(`ℹ️ 제외: ${[...unresolvedMembers.map((n) => `${n}(회사명 미해석)`), ...missing.map((n) => `${n}(미공표)`), ...dropped.map((n) => `${n}(시점 불일치)`)].join(", ")} — 그룹 ${memberSet.size}사 중 ${aligned.length}사 기준`);
   }
   parts.push(SOURCE_LINE);
   return parts.join("\n\n");

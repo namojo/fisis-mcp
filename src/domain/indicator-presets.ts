@@ -29,6 +29,8 @@ export interface IndicatorPreset {
   direction: "higher_better" | "lower_better";
   unit: string;
   verified: boolean;
+  /** 통계 주기 오버라이드 — 실측: 유지율(SH025)은 반기(H) 전용, 기본은 분기(Q) */
+  term?: "Y" | "H" | "Q";
 }
 
 export const PRESETS: IndicatorPreset[] = [
@@ -103,14 +105,14 @@ export const PRESETS: IndicatorPreset[] = [
     aliases: ["유지율", "계약유지율", "13회차유지율", "13회차"],
     listNo: "SH025", accountCd: "A", // 보험계약 유지율(13회, 25회) / 13회차 계약유지율
     searchHints: { list: ["유지율"], account: ["13회차"] },
-    direction: "higher_better", unit: "%", verified: true,
+    direction: "higher_better", unit: "%", verified: true, term: "H", // 실측: 반기 전용
   },
   {
     key: "persistency_25", label: "25회차 계약유지율", sector: "insurance_life",
     aliases: ["25회차유지율", "25회차"],
     listNo: "SH025", accountCd: "B",
     searchHints: { list: ["유지율"], account: ["25회차"] },
-    direction: "higher_better", unit: "%", verified: true,
+    direction: "higher_better", unit: "%", verified: true, term: "H", // 실측: 반기 전용
   },
   // ── 손해보험 (I) ──────────────────────────────────────
   {

@@ -7,9 +7,9 @@ import { SECTORS } from "../domain/sectors.js";
 
 /** focus → 벤치마킹할 지표 우선순위 */
 const FOCUS_MAP: Record<string, string[]> = {
-  건전성: ["bis_ratio", "npl_ratio", "kics_life", "kics_nonlife", "bis_savings", "ncr", "adj_capital_card"],
-  수익성: ["roa_bank", "roe_bank", "loss_ratio", "net_income_bank"],
-  성장성: ["total_assets_bank", "premium_income_life"],
+  건전성: ["bis_ratio", "npl_ratio", "kics_life", "kics_nonlife", "bis_savings", "npl_savings", "ncr", "adj_capital_card", "delinquency_card"],
+  수익성: ["roa_bank", "roe_bank", "roa_life", "roa_nonlife", "net_income_bank"],
+  성장성: ["total_assets_bank", "persistency_13"],
 };
 
 export async function profileTool(args: { company: string; focus?: string }): Promise<string> {

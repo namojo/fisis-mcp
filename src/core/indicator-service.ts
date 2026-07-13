@@ -77,7 +77,8 @@ export async function fetchIndicator(
   const preset = PRESETS.find((p) => p.key === presetKey);
   if (!preset) throw new FisisError(`프리셋 없음: ${presetKey}`, "NO_PRESET");
   // 참고: K-ICS/RBC는 SH021·SI021에 연속 수록됨이 실측 확인되어 기간 분기 로직 불필요
-  const note: string | undefined = undefined;
+  const effectiveTerm = preset.term ?? term; // 실측: 일부 통계(유지율)는 반기 전용
+  const note = preset.term === "H" ? `${preset.label}은 반기(H) 주기 통계` : undefined;
 
   const codes: ResolvedCodes =
     preset.verified && preset.listNo && preset.accountCd
@@ -88,7 +89,7 @@ export async function fetchIndicator(
     financeCd,
     listNo: codes.listNo,
     accountCd: codes.accountCd,
-    term,
+    term: effectiveTerm,
     startBaseMm,
     endBaseMm,
   });
