@@ -4,15 +4,15 @@
   "description": "MCP server for FISIS (금융감독원 금융통계정보시스템) — Korean financial institution statistics for AI agents",
   "type": "module",
   "bin": {
-    "fisis-mcp": "dist/index.js"
+    "fisis-mcp": "dist/src/index.js"
   },
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "files": [
     "dist",
     "README.md"
   ],
   "scripts": {
-    "build": "tsc && node -e \"require('fs').chmodSync('dist/index.js', 0o755)\"",
+    "build": "tsc && node -e \"require('fs').chmodSync('dist/src/index.js', 0o755)\"",
     "dev": "tsc --watch",
     "test": "vitest run",
     "verify-presets": "node dist/scripts/verify-presets.js",
