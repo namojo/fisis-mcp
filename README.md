@@ -71,7 +71,7 @@ flowchart LR
 
 ### 1. 인증키 발급 (무료, 5분)
 
-[fisis.fss.or.kr/openapi](https://fisis.fss.or.kr/openapi) → **인증키신청**
+[fisis.fss.or.kr/page/api-key.jsp](https://fisis.fss.or.kr/page/api-key.jsp) (또는 FISIS 홈 → **OPEN API** → **인증키신청** 메뉴)
 
 > ⚠️ FISIS API는 **해외 IP를 차단**합니다. 한국 네트워크에서 사용하세요.
 
@@ -220,7 +220,7 @@ CLI 플래그 `--no-cache`로 캐시 우회.
 | 증상 | 원인/해결 |
 |------|-----------|
 | "FISIS API 연결 실패 (타임아웃)" | 해외 IP 차단 — 한국 네트워크에서 실행. VPN/클라우드 리전 확인 |
-| "인증키가 유효하지 않습니다" | 키 오타 또는 미승인 — fisis.fss.or.kr/openapi에서 상태 확인 |
+| "인증키가 유효하지 않습니다" | 키 오타 또는 미승인 — fisis.fss.or.kr/page/api-key.jsp에서 상태 확인 |
 | "해당 조건의 데이터가 없습니다" | **공표 시차** — FISIS는 분기 종료 후 2~3개월 뒤 공표. 기간을 한 분기 앞으로 |
 | "프리셋 갱신 필요" 경고 | 통계표 개편 — `npm run verify-presets` 재실행 후 프리셋 갱신 |
 | 특정 회사만 벤치마킹에서 제외됨 | 해당 사 미공표 또는 시점 불일치 — 응답 하단에 사유 명시됨 |

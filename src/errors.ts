@@ -26,7 +26,7 @@ export function missingApiKeyError(): FisisError {
   return new FisisError(
     "FISIS_API_KEY 환경변수가 설정되지 않았습니다.",
     "NO_API_KEY",
-    "https://fisis.fss.or.kr/openapi 에서 무료 인증키를 발급받아 MCP 설정의 env에 추가한 뒤 서버를 재시작하세요.",
+    "https://fisis.fss.or.kr/page/api-key.jsp (FISIS → OPEN API → 인증키신청) 에서 무료 인증키를 발급받아 MCP 설정의 env에 추가한 뒤 서버를 재시작하세요.",
   );
 }
 
@@ -35,7 +35,7 @@ export function fromFisisErrCode(errCd: string, errMsg: string): FisisError {
   const known: Record<string, { msg: string; hint: string }> = {
     "010": {
       msg: "인증키가 유효하지 않습니다.",
-      hint: "FISIS_API_KEY 값을 확인하세요. 키는 https://fisis.fss.or.kr/openapi 에서 재발급 가능합니다.",
+      hint: "FISIS_API_KEY 값을 확인하세요. 키는 https://fisis.fss.or.kr/page/api-key.jsp (OPEN API → 인증키신청) 에서 재발급 가능합니다.",
     },
     "011": {
       msg: "일일 호출 한도를 초과했을 수 있습니다.",
